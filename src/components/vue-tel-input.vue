@@ -58,7 +58,7 @@
 
 <script>
 import PhoneNumber from 'awesome-phonenumber';
-import utils, { getCountry, setCaretPosition } from '../utils';
+import utils, { setCaretPosition } from '../utils';
 
 function getDefault(key) {
   const value = utils.options[key];
@@ -223,6 +223,10 @@ export default {
     dynamicPlaceholder: {
       type: Boolean,
       default: () => getDefault('dynamicPlaceholder'),
+    },
+    fetchCountry: {
+      type: Function,
+      default: getDefault('fetchCountry'),
     },
   },
   data() {
@@ -401,7 +405,7 @@ export default {
          * 3. Check if fetching country based on user's IP is allowed, set it as the default country
          */
         if (!this.disabledFetchingCountry) {
-          getCountry()
+          this.fetchCountry()
             .then((res) => {
               this.activeCountry = this.findCountry(res) || this.activeCountry;
             })

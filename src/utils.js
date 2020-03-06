@@ -9,7 +9,6 @@ export function getCountry() {
       if (!result || result[0] !== '1') {
         throw new Error('unable to fetch the country');
       }
-
       return result.substr(2, 2);
     });
 }
@@ -57,6 +56,7 @@ export const defaultOptions = {
   validCharactersOnly: false,
   customValidate: false,
   dynamicPlaceholder: false,
+  fetchCountry: getCountry,
 };
 
 export default {
