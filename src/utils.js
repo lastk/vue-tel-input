@@ -1,16 +1,11 @@
-import allCountries from './assets/all-countries';
+import axios from 'axios';
+import allCountries from "./assets/all-countries";
 
-export function getCountry() {
-  return fetch('https://ip2c.org/s')
-    .then(response => response.text())
-    .then((response) => {
-      const result = (response || '').toString();
-
-      if (!result || result[0] !== '1') {
-        throw new Error('unable to fetch the country');
-      }
-      return result.substr(2, 2);
-    });
+export async function getCountry() {
+  const response = await axios({
+    url: "https://ipinfo.io/json?token=263f1230eff65b"
+  });
+  return response.data.country;
 }
 
 // Credits: http://blog.vishalon.net/index.php/javascript-getting-and-setting-caret-position-in-textarea/
@@ -20,45 +15,45 @@ export function setCaretPosition(ctrl, pos) {
     ctrl.focus();
     ctrl.setSelectionRange(pos, pos);
 
-  // IE8 and below
+    // IE8 and below
   } else if (ctrl.createTextRange) {
     const range = ctrl.createTextRange();
     range.collapse(true);
-    range.moveEnd('character', pos);
-    range.moveStart('character', pos);
+    range.moveEnd("character", pos);
+    range.moveStart("character", pos);
     range.select();
   }
 }
 
 export const defaultOptions = {
-  placeholder: 'Enter a phone number',
+  placeholder: "Enter a phone number",
   disabledFetchingCountry: false,
   disabled: false,
-  mode: '',
-  invalidMsg: '',
+  mode: "",
+  invalidMsg: "",
   required: false,
   allCountries,
-  defaultCountry: '',
+  defaultCountry: "",
   enabledCountryCode: false,
   enabledFlags: true,
   preferredCountries: [],
   onlyCountries: [],
   ignoredCountries: [],
   autofocus: false,
-  autocomplete: 'on',
-  name: 'telephone',
-  wrapperClasses: '',
-  inputClasses: '',
-  inputId: '',
+  autocomplete: "on",
+  name: "telephone",
+  wrapperClasses: "",
+  inputClasses: "",
+  inputId: "",
   dropdownOptions: {},
   inputOptions: {},
   maxLen: 25,
   validCharactersOnly: false,
   customValidate: false,
   dynamicPlaceholder: false,
-  fetchCountry: getCountry,
+  fetchCountry: getCountry
 };
 
 export default {
-  options: { ...defaultOptions },
+  options: { ...defaultOptions }
 };
